@@ -25,7 +25,7 @@ class SchoolUser extends BaseModel
         // 数据库用户名
         'username'    => 'baohefan',
         // 数据库密码
-        'password'    => 'swf@!(*&01',
+        'password'    => '1111111',
         // 数据库连接端口
         'hostport'    => '',
         // 数据库连接参数
