@@ -26,10 +26,13 @@ class Text
 
     public function insertOriginalUrl($oid){
         $unique=$this->getOrderUniqueKey($oid);
+        //echo $unique;die;
         $textArr=TextModel::where('unique','=',$unique)->where('uploader','=',0)->select();//唯一号标识的且被系统采纳的 原库的会被自动采纳 uploader为0说明是系统原文
 
 
         if($textArr->isEmpty()){
+            //echo 1111;die;
+            //echo $oid;die;
             //如果原库不存在
             $send=new SendService($oid);
             $url=$send->getUrl();
@@ -64,6 +67,23 @@ class Text
                         ]);
                     }
 
+                }
+
+            }else{
+                //这个是后来加上的
+
+                $success=OrderModel::where('id','=',$oid)->update([
+                    'url'=>$url, //推送订单的时候计算
+                    'status'=>0 //这个回调中链接已经确定可以发送到前台抢单
+                ]);
+                if(!$success){
+                    throw new OrderException([
+                        'msg'=>'更新失败'
+                    ]);
+                }else{
+                    throw new SuccessMessage([
+                        'msg'=>'更新成功'
+                    ]);
                 }
 
             }

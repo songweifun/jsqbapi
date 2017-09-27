@@ -105,5 +105,17 @@ Route::post('api/:version/system/update_library','api/:version.System/updateLibr
 Route::get('api/:version/system/one_library','api/:version.System/getLibraryDetail');
 Route::delete('api/:version/system/delete_library','api/:version.System/deleteLibrary');
 
+Route::get('api/:version/system/schools','api/:version.System/getSchools');
+
+
+Route::get('api/:version/statistics/order_byschool','api/:version.Statistics/getOrderStatisticsBySchool');
+Route::get('api/:version/statistics/resource_byschool','api/:version.Statistics/getResourceStatisticsBySchool');
+Route::get('api/:version/statistics/requestip_top10','api/:version.Statistics/getRequstStatisticsByIpTop10');
+Route::get('api/:version/statistics/requestmap_top10','api/:version.Statistics/getRequestStatisticsByMapNameTop10');
+
+
+
+
+
 
 

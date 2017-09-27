@@ -71,7 +71,7 @@ class Order extends BaseController
         $system->checkIp();
 
 
-        if(OrderModel::where('order_from','=',$uid)->where('doi','=',$doi)->where('status','=',0)->find()){
+        if(OrderModel::where('order_from','=',$uid)->where('doi','=',$doi)->where('an','=',$an)->where('status','=',0)->find()){
             throw new OrderException([
                 'msg' => '请求已发送，请耐心等待',
                 'errorCode' => 20001,

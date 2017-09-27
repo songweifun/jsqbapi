@@ -13,9 +13,18 @@ use app\api\service\Token;
 use app\lib\exception\LibraryException;
 use app\lib\exception\ParmeterException;
 use app\lib\exception\SuccessMessage;
+use app\api\model\School as SchoolModel;
 
 class Admin extends BaseModel
 {
+    public function getSchoolIdAttr($value)
+    {
+        return SchoolModel::get($value);
+    }
+    public function getLibraries(){
+        return self::all();
+
+    }
     public static function check($ac, $se)
     {
         $app = self::where('app_id','=',$ac)
@@ -46,7 +55,7 @@ class Admin extends BaseModel
         $admin=self::create([
             'app_id'=>$postData['app_id'],
             'app_secret'=>$postData['secret']['app_secret'],
-            'app_description'=>$postData['app_description'],
+            'school_id'=>$postData['school_id'],
             'is_open'=>$postData['isOpen'],
             'adder'=>$uid,
             'scope'=>$postData['scope'],
@@ -70,7 +79,7 @@ class Admin extends BaseModel
         $id=input('post.id');
         $dataArr=[
             'app_secret'=>$postData['secret']['app_secret'],
-            'app_description'=>$postData['app_description'],
+            'school_id'=>$postData['school_id'],
             'is_open'=>$postData['isOpen'],
             'scope'=>$postData['scope'],
             'app_id'=>$postData['app_id'],

@@ -11,17 +11,32 @@ namespace app\api\controller\v1;
 
 use app\api\controller\BaseController;
 use app\api\model\Map;
+use app\api\model\MapSpite;
 use app\lib\exception\IpMapException;
 use app\lib\exception\LibraryException;
+use app\lib\exception\SchoolException;
 use app\lib\exception\SuccessMessage;
 use app\api\model\Admin as AdminModel;
+use app\api\model\School as SchoolModel;
 
 class System extends BaseController
 {
 
+    public function getSchools(){
+        $result=SchoolModel::all();
+        if($result->isEmpty()){
+            throw new SchoolException();
+
+        }else{
+            return json($result);
+        }
+
+    }
+
     public function getLibrarys(){
 
-        $result=AdminModel::all();
+        $admin=new AdminModel();
+        $result=$admin->getLibraries();
         if($result->isEmpty()){
             throw new LibraryException();
 
@@ -153,12 +168,16 @@ class System extends BaseController
     public function deleteIpMap(){
         $id= request()->header('id');
         $success=Map::destroy($id);
+
+
         if(!$success){
+
             throw new IpMapException([
                 'msg'=>'删除失败',
                 'errorCode'=>'30003'
             ]);
         }else{
+            MapSpite::where('map_id','=',$id)->delete();//删除分散的ip
             throw new SuccessMessage([
                 'msg'=>'删除成功',
                 //'code'=>204

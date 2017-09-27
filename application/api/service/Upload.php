@@ -19,7 +19,7 @@ class Upload
         //echo request()->header('orderId');
         $oid=request()->header('orderId');
 
-        $info = $file->validate(['size'=>300000])->move(ROOT_PATH . 'public' . DS . 'uploads');
+        $info = $file->validate(['size'=>900000000000000000000])->move(ROOT_PATH . 'public' . DS . 'uploads');
         if($info){
             // 成功上传后 获取上传信息
             // 输出 jpg
