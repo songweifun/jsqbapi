@@ -33,6 +33,7 @@ class Token
     public static function getCurrentTokenVar($key){
         //规定token必须在http请求头中传递过来
         $token=Request::instance()->header('token');
+        //echo 11111;die;
         $vars=Cache::get($token);
         if(!$vars){
             throw new TokenException();

@@ -115,6 +115,21 @@ Route::get('api/:version/statistics/requestmap_top10','api/:version.Statistics/g
 
 
 
+Route::get('api/:version/member/all','api/:version.Member/getAllUser');
+Route::get('api/:version/member/one_member','api/:version.Member/getDetailOneMember');
+Route::post('api/:version/member/update_member','api/:version.Member/updateMember');
+Route::get('api/:version/member/all_school','api/:version.Member/getAllSchoolMessage');
+Route::post('api/:version/member/update_isopen','api/:version.Member/updateMemberIsOpen');
+
+
+Route::post('api/:version/log/login','api/:version.Log/recordLoginLog');
+Route::post('api/:version/log/logout','api/:version.Log/recordLogoutLog');
+
+
+
+
+
+
 
 
 

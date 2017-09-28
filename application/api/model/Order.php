@@ -25,7 +25,7 @@ class Order extends BaseModel
     {
         $text=new Text();
         $unique=$text->getOrderUniqueKey($data['id']);
-        $this->uploader=Token::getCurrentTokenVar('uid');
+        $this->uploader=Token::getCurrentTokenVar('uid'); //要根据不同的用户推送不同的订单不是所有的订单状态都是可以推送的因为有的传递过有的没传递过
         //$count=TextModel::where('unique','=',$unique)->count();
         $count=TextModel::where('unique','=',$unique)
             ->where(function ($query) {

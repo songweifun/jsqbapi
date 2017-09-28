@@ -2,16 +2,14 @@
 /**
  * Created by PhpStorm.
  * User: daivd
- * Date: 2017/9/5
- * Time: 下午9:37
+ * Date: 2017/9/28
+ * Time: 上午11:39
  */
-
-//find上前台用户表
 
 namespace app\api\model;
 
 
-class SchoolUser extends BaseModel
+class qtUserBase extends BaseModel
 {
     protected $connection = [
         // 数据库类型
@@ -21,7 +19,7 @@ class SchoolUser extends BaseModel
         // 服务器地址
         'hostname'    => '42.96.147.165',
         // 数据库名
-        'database'    => 'findplus_user',
+        'database'    => 'findplus',
         // 数据库用户名
         'username'    => 'baohefan',
         // 数据库密码
@@ -36,18 +34,11 @@ class SchoolUser extends BaseModel
         'prefix'      => '',
     ];
 
-    public static function check($uid)
-    {
-        $user = self::where('id','=',$uid)
-            ->find();
-        return $user;
 
+    public function getAllSchoolMessage(){
+        $result=self::field(['user_id','user_name'])->select();
+        return $result;
     }
 
-    public function getAllUser($page,$size){
-        $pagingData = self::order('id desc')
-            ->paginate($size, false, ['page' => $page]);
-        return $pagingData ;
-    }
 
 }
