@@ -18,6 +18,7 @@ class Map extends BaseModel
     protected $autoWriteTimestamp=true; //自动写入时间戳
 
 
+
     public function createNew(){
         $postData=input('post.data/a');
         $is_forbid=input('post.is_forbid');
@@ -44,6 +45,12 @@ class Map extends BaseModel
         if($map->id){
 
             $this->createIpMapSpite($postData['ipRange']['start'],$postData['ipRange']['end'],$map->id);
+
+            $log=new Log();
+            //添加操作日志
+
+            $log->log(3,$uid,request()->ip(),"添加ip映射{$postData['ipRange']['start']}-{$postData['ipRange']['end']}");
+
             throw new SuccessMessage([
                 'msg'=>'添加成功',
                 //'errorCode'=>1
@@ -98,6 +105,10 @@ class Map extends BaseModel
             //重新加入分散的id
             $this->checkIpMap($postData['ipRange']['start'],$postData['ipRange']['end']);
             $this->createIpMapSpite($postData['ipRange']['start'],$postData['ipRange']['end'],$id);
+            $log=new Log();
+            //日志
+            $log->log(4,Token::getCurrentUid(),request()->ip(),"修改ip映射{$postData['ipRange']['start']}-{$postData['ipRange']['end']}");
+
 
             throw new SuccessMessage();
         }

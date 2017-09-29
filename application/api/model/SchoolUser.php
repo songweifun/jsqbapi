@@ -44,9 +44,16 @@ class SchoolUser extends BaseModel
 
     }
 
-    public function getAllUser($page,$size){
-        $pagingData = self::order('id desc')
-            ->paginate($size, false, ['page' => $page]);
+    public function getAllUser($keyword,$page,$size){
+        //echo $keyword;die;
+        if(!$keyword){
+            $pagingData = self::order('id desc')
+                ->paginate($size, false, ['page' => $page]);
+        }else{
+            $pagingData = self::where('user_email','like',"%$keyword%")->order('id desc')
+                ->paginate($size, false, ['page' => $page]);
+        }
+
         return $pagingData ;
     }
 

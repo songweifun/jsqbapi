@@ -18,15 +18,20 @@ use app\lib\exception\SuccessMessage;
 
 class Member extends BaseController
 {
-    public function getAllUser($pageNumber = 1, $pageSize = 15){
+    public function getAllUserByKeyword($keyword='',$pageNumber = 1, $pageSize = 15){
+
+    }
+    public function getAllUser($keyword='',$pageNumber = 1, $pageSize = 15){
 
         $usermodel=new SchoolUserModel();
-        $pagingOrders = $usermodel->getAllUser( $pageNumber, $pageSize);
+        $pagingOrders = $usermodel->getAllUser( $keyword,$pageNumber, $pageSize);
         if ($pagingOrders->isEmpty())
         {
             return json([
                 'current_page' => $pagingOrders->currentPage(),
-                'data' => []
+                'rows' => [],
+                'total'=>0,
+                'page_size'=>$pageSize
             ]);
         }
         $collection = collection($pagingOrders->items());

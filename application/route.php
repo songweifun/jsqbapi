@@ -124,6 +124,8 @@ Route::post('api/:version/member/update_isopen','api/:version.Member/updateMembe
 
 Route::post('api/:version/log/login','api/:version.Log/recordLoginLog');
 Route::post('api/:version/log/logout','api/:version.Log/recordLogoutLog');
+Route::get('api/:version/log/get_entry','api/:version.Log/getEntryLog');
+Route::get('api/:version/log/get_operate','api/:version.Log/getOperateLog');
 
 
 

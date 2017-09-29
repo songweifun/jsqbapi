@@ -37,6 +37,11 @@ class Statistics
     public function getRequestStatisticsByMapNameTop10(){
         $sql="select c.map_name as name,COUNT(*) as value from jsqb_order as a LEFT JOIN jsqb_map_spite as b on a.requestip=b.ip LEFT JOIN jsqb_map as c on b.map_id=c.id GROUP BY c.id ORDER BY COUNT(*) DESC limit 10";
         $result=Db::query($sql);
+        foreach ($result as $k=>$v){
+            if($v['name']==null){
+                $result[$k]['name']='未知';
+            }
+        }
         return json($result);
     }
 

@@ -10,8 +10,10 @@ namespace app\api\controller\v1;
 
 
 use app\api\controller\BaseController;
+use app\api\model\Log;
 use app\api\model\Map;
 use app\api\model\MapSpite;
+use app\api\service\Token;
 use app\lib\exception\IpMapException;
 use app\lib\exception\LibraryException;
 use app\lib\exception\SchoolException;
@@ -167,10 +169,14 @@ class System extends BaseController
 
     public function deleteIpMap(){
         $id= request()->header('id');
+        $mapdate=Map::get($id);
         $success=Map::destroy($id);
 
 
+
+
         if(!$success){
+
 
             throw new IpMapException([
                 'msg'=>'删除失败',
@@ -178,6 +184,7 @@ class System extends BaseController
             ]);
         }else{
             MapSpite::where('map_id','=',$id)->delete();//删除分散的ip
+            (new Log())->log(5,Token::getCurrentUid(),request()->ip(),"删除ip映射{$mapdate['ip_start']}-{$mapdate['ip_end']}");
             throw new SuccessMessage([
                 'msg'=>'删除成功',
                 //'code'=>204
